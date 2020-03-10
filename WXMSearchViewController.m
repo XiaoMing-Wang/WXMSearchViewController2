@@ -10,8 +10,9 @@
 #import "WXMSeaechConfiguration.h"
 #import "WXMSearchResultsViewController.h"
 
-
-@implementation WXMSearchViewController
+@implementation WXMSearchViewController {
+    CGFloat _lastOffyTop;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -77,10 +78,10 @@
     self.tableView.scrollEnabled = !editor;
     self.resultsViewController.view.alpha = editor;
     
-    if (editor) self.resultsViewController.view.top = kSearchBHeight + WXMTextMargin;
+    if (editor) self.resultsViewController.view.top = WXMSearchHeight + kStatusHeight; /** 状态栏 */
     if (!editor) {
         [self setResultDataSources:@[]];
-        self.resultsViewController.view.top = WXMSearchHeight;
+        self.resultsViewController.view.top = _lastOffyTop;
         [self.resultsViewController.tableView setContentOffset:CGPointZero];
     }
 }
@@ -91,7 +92,7 @@
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        CGRect frame = CGRectMake(0, 0, kSearchWidth, kSearchHeight - kSearchBHeight);
+        CGRect frame = CGRectMake(0, 0, kSearchWidth, kSearchHeight);
         _tableView = [[UITableView alloc] initWithFrame:frame];
         _tableView.rowHeight = 49;
         _tableView.delegate = self;
@@ -119,13 +120,16 @@
         _resultsViewController = [[WXMSearchResultsViewController alloc] init];
         _resultsViewController.cellClass = self.cellClass;
         _resultsViewController.view.top = kSearchBHeight + WXMSearchHeight;
-        _resultsViewController.view.height = kSearchHeight - WXMSeaechTextH - WXMTextMargin * 2.0;
+        _resultsViewController.view.height = kSearchHeight - WXMSearchHeight - kStatusHeight; /** 状态栏 */
+        _resultsViewController.tableView.height = _resultsViewController.view.height;
         _resultsViewController.view.alpha = 0;
         _resultsViewController.view.backgroundColor = self.searchBar.searchBackgroundColor;
+        _resultsViewController.view.backgroundColor = [UIColor yellowColor];
         _resultsViewController.loadCellData = ^(UITableViewCell *cell, NSArray *data,NSIndexPath *ip) {
             [weakSelf loadCell:cell dataSource:data index:ip];
         };
         
+        _lastOffyTop = _resultsViewController.view.top;
         _resultsViewController.callbackResult = ^(id result) {
             NSInteger row = [weakSelf.dataSource indexOfObject:result];
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];

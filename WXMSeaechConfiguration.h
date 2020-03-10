@@ -45,6 +45,7 @@
 #define kTableHeight kSearchHeight - kSearchBHeight
 
 #define kSearchBHeight ((kSearchIPhoneX) ? 88.0f : 64.0f)
+#define kStatusHeight ((kSearchIPhoneX) ? 44.0f : 20.0f)
 #define kSearchSafeHeight ((kSearchIPhoneX) ? 25.0f : 0.0f)
 
 #define kSearchIPhoneX \

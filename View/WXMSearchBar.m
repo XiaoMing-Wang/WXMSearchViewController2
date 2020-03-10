@@ -6,7 +6,7 @@
 //  Copyright © 2020 wxm. All rights reserved.
 //
 #define WXMCancelH 50
-#define WXMDuration .265
+#define WXMDuration 0.275
 #import "WXMSearchBar.h"
 #import "UIView+WXMSearch.h"
 #import "WXMSeaechConfiguration.h"
@@ -39,7 +39,7 @@
     UIControlEvents event = UIControlEventTouchUpInside;
     UIControlEvents allEvents = UIControlEventAllEvents;
     
-    self.topView = [[UIView alloc] initWithFrame:CGRectMake(0, -20, kSearchWidth, 20)];
+    self.topView = [[UIView alloc] initWithFrame:CGRectMake(0, -kStatusHeight, kSearchWidth, kStatusHeight)];
     self.topView.backgroundColor = [UIColor whiteColor];
     self.topView.alpha = 0;
     

@@ -19,6 +19,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 15;
     return self.dataSource.count;
 }
 
@@ -41,7 +42,6 @@
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
-        _tableView.height = kSearchHeight - kSearchBHeight - WXMTextMargin;
         _tableView.rowHeight = 49;
         _tableView.delegate = self;
         _tableView.dataSource = self;
