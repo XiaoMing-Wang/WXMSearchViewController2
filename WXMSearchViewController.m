@@ -10,6 +10,7 @@
 #import "WXMSeaechConfiguration.h"
 #import "WXMSearchResultsViewController.h"
 
+
 @implementation WXMSearchViewController
 
 - (void)viewDidLoad {
@@ -35,6 +36,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.view.backgroundColor = [UIColor whiteColor];
     self.tableView.tableHeaderView = self.searchBar;
+    /** [self.tableView wc_rollingPriorityLow:self]; */
+    
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.resultsViewController.view];
     [self addChildViewController:self.resultsViewController];
@@ -104,7 +107,7 @@
 - (WXMSearchBar *)searchBar {
     if (!_searchBar) {
         _searchBar = [WXMSearchBar searchBar];
-        _searchBar.searchBackgroundColor = [UIColor grayColor];
+        _searchBar.searchBackgroundColor = [UIColor colorWithRed:(237) / 255.0f green:(237) / 255.0f blue:(237) / 255.0f alpha:1];
         _searchBar.delegate = self;
     }
     return _searchBar;

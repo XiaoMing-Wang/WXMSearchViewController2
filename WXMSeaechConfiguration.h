@@ -28,7 +28,7 @@
 #define WXMSeaechCornerRadius 6.0
 
 /** icon和字间隔 */
-#define WXMSeaechIconText 6
+#define WXMSeaechIconText 6.0
 
 /** 搜索按钮 */
 #define WXMSeaechPlace @"搜索"
@@ -36,8 +36,9 @@
 /** 取消按钮 */
 #define WXMSeaechCancel @"取消"
 
-/** 颜色 */
-#define WXMSeaechCancelColor  UIColor.blueColor
+/** 取消颜色 */
+#define WXMSeaechCancelColor [UIColor colorWithRed:(98) / 255.0f green:(106) / 255.0f blue:(134) / 255.0f alpha:1]
+
 #define kSearchWindow [[[UIApplication sharedApplication] delegate] window]
 #define kSearchWidth [UIScreen mainScreen].bounds.size.width
 #define kSearchHeight [UIScreen mainScreen].bounds.size.height

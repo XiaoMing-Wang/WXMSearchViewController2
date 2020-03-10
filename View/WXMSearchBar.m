@@ -131,7 +131,7 @@
             self.cancelButton.left = kSearchWidth;
             self.searchBackground.width = kSearchWidth - 2 * WXMSeaechMargin;
             
-            self.searchIcon.right = self.searchBackground.width / 2.0 - WXMSeaechIconText;
+            self.searchIcon.right = self.searchBackground.width / 2.0 - WXMSeaechIconText - 2.0;
             self.searchIcon.centerY = self.searchBackground.height / 2.0;
             
             self.searchPlace.left = self.searchIcon.right + WXMSeaechIconText;

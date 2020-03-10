@@ -18,9 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WXMSearchBar : UIView
 
-/**  */
-/** @property (nonatomic, weak) UIViewController *controller; */
-
 /** 代理 */
 @property (nonatomic, assign) id <WXMSearchBarDelegate>delegate;
 
@@ -38,7 +35,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 创建searchBar */
 + (instancetype)searchBar;
-
 
 /** 无动画 */
 - (void)setEdit:(BOOL)editor;
