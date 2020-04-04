@@ -10,9 +10,7 @@
 #import "WXMSeaechConfiguration.h"
 #import "WXMSearchResultsViewController.h"
 
-@implementation WXMSearchViewController {
-    CGFloat _lastOffyTop;
-}
+@implementation WXMSearchViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,7 +35,16 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.view.backgroundColor = [UIColor whiteColor];
     self.tableView.tableHeaderView = self.searchBar;
-    /** [self.tableView wc_rollingPriorityLow:self]; */
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.navigationController.navigationBar.translucent = NO;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    if (@available(iOS 11.0, *)) self.automaticallyAdjustsScrollViewInsets = NO;
+        
+    UIImage *images = [self colorToImage:UIColor.whiteColor];
+    [self.navigationController.navigationBar setBackgroundImage:images forBarMetrics:0];
+    [self.navigationController.navigationBar setShadowImage:images];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.resultsViewController.view];
@@ -45,7 +52,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 22;
     return self.dataSource.count;
 }
 
@@ -75,15 +81,28 @@
 - (void)searchBarEditorSatatus:(BOOL)editor {
     [self.navigationController setNavigationBarHidden:editor animated:YES];
     self.navigationController.interactivePopGestureRecognizer.enabled = !editor;
-    self.tableView.scrollEnabled = !editor;
-    self.resultsViewController.view.alpha = editor;
     
-    if (editor) self.resultsViewController.view.top = WXMSearchHeight + kStatusHeight; /** 状态栏 */
-    if (!editor) {
+    if (editor) {
+        
+        self.tableView.top = kStatusHeight;
+        self.tableView.scrollEnabled = NO;
+        self.tableView.clipsToBounds = NO;
+        self.resultsViewController.view.alpha = 1;
+        self.resultsViewController.view.top = WXMSearchHeight + kStatusHeight;
+        
+    } else {
+        
         [self setResultDataSources:@[]];
-        self.resultsViewController.view.top = _lastOffyTop;
-        [self.resultsViewController.tableView setContentOffset:CGPointZero];
+        self.tableView.top = 0;
+        self.tableView.scrollEnabled = YES;
+        self.resultsViewController.view.alpha = 0;
+        self.resultsViewController.view.top = WXMSearchHeight;
     }
+}
+
+- (void)searchBarEditorEnd:(BOOL)editor {
+    self.tableView.clipsToBounds = !editor;
+    if (!editor) [self.resultsViewController.tableView setContentOffset:CGPointZero];
 }
 
 - (void)searchBarTextFliedChane:(NSString *)aString {
@@ -119,8 +138,8 @@
         __weak typeof(self) weakSelf = self;
         _resultsViewController = [[WXMSearchResultsViewController alloc] init];
         _resultsViewController.cellClass = self.cellClass;
-        _resultsViewController.view.top = kSearchBHeight + WXMSearchHeight;
-        _resultsViewController.view.height = kSearchHeight - WXMSearchHeight - kStatusHeight; /** 状态栏 */
+        _resultsViewController.view.top =  WXMSearchHeight;
+        _resultsViewController.view.height = kSearchHeight - WXMSearchHeight - kStatusHeight;
         _resultsViewController.tableView.height = _resultsViewController.view.height;
         _resultsViewController.view.alpha = 0;
         _resultsViewController.view.backgroundColor = self.searchBar.searchBackgroundColor;
@@ -129,7 +148,6 @@
             [weakSelf loadCell:cell dataSource:data index:ip];
         };
         
-        _lastOffyTop = _resultsViewController.view.top;
         _resultsViewController.callbackResult = ^(id result) {
             NSInteger row = [weakSelf.dataSource indexOfObject:result];
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
@@ -138,4 +156,16 @@
     }
     return _resultsViewController;
 }
+
+- (UIImage *)colorToImage:(UIColor *)color {
+    CGRect rect = CGRectMake(0, 0, 1, 1);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
 @end

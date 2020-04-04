@@ -26,6 +26,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tab cellForRowAtIndexPath:(NSIndexPath *)index {
     UITableViewCell *cell = [tab dequeueReusableCellWithIdentifier:@"cell" forIndexPath:index];
     if (self.loadCellData) self.loadCellData(cell, self.dataSource, index);
+    cell.backgroundColor = [UIColor redColor];
     return cell;
 }
 

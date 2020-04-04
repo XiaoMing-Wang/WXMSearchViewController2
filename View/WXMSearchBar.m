@@ -131,7 +131,7 @@
             self.cancelButton.left = kSearchWidth;
             self.searchBackground.width = kSearchWidth - 2 * WXMSeaechMargin;
             
-            self.searchIcon.right = self.searchBackground.width / 2.0 - WXMSeaechIconText - 2.0;
+            self.searchIcon.right = self.searchBackground.width / 2.0 - WXMSeaechIconText - 7.5;
             self.searchIcon.centerY = self.searchBackground.height / 2.0;
             
             self.searchPlace.left = self.searchIcon.right + WXMSeaechIconText;
@@ -145,10 +145,15 @@
         }
         
     } completion:^(BOOL finished) {
+        
         self.isAnimation = NO;
         self.duration = WXMDuration;
         self.textField.alpha = editor;
         !editor ? [self.topView setAlpha:0] : nil;
+        
+        if ([self.delegate respondsToSelector:@selector(searchBarEditorEnd:)]) {
+            [self.delegate searchBarEditorEnd:editor];
+        }
     }];
 }
 
@@ -166,7 +171,7 @@
 }
 
 - (BOOL)isKindOfClass:(Class)aClass {
-    if (aClass == [UISearchBar class]) return YES;
+    if (aClass == [UISearchBar class]) return NO;
     return [super isKindOfClass:aClass];
 }
 

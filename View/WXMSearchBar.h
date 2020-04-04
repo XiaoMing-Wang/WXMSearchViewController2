@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol WXMSearchBarDelegate <NSObject>
 - (void)searchBarTextFliedChane:(NSString *)aString;
 - (void)searchBarEditorSatatus:(BOOL)editor;
+- (void)searchBarEditorEnd:(BOOL)editor;
 @end
 
 @interface WXMSearchBar : UIView
