@@ -127,7 +127,11 @@
 - (WXMSearchBar *)searchBar {
     if (!_searchBar) {
         _searchBar = [WXMSearchBar searchBar];
-        _searchBar.searchBackgroundColor = [UIColor colorWithRed:(237) / 255.0f green:(237) / 255.0f blue:(237) / 255.0f alpha:1];
+        
+        _searchBar.searchBackgroundColor = [UIColor colorWithRed:(237) / 255.0f
+                                                           green:(237) / 255.0f
+                                                            blue:(237) / 255.0f alpha:1];
+        
         _searchBar.delegate = self;
     }
     return _searchBar;
